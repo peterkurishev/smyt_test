@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block contents %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Это тестовое задание!</h1>
+            <p>Внимание! Это тестовое задание, а не реальный проект.</p>
+            <p class="minified">Конечно, можно было бы сделать вот такие еще штуки:</p>
+            <ul>
+                <li>Полноценная работа на мобильных устройствах (responsive).</li>
+                <li>Отметить активные пункты меню.</li>
+                <li>Сделать stiky footer более &quot;умным&quot.</li>
+                <li>Нормальный вывод ошибок из JavaScript.</li>
+                <li>Правильный deployment через Fabric (например).</li>
+            </ul>
+            <p class="minified">Однако, критическим параметром выполнения тестового задания является время, а это один
+                из основных невосполняемых ресурсов.</p>
+            <p><a class="btn btn-primary btn-lg" href="{% url 'smyt:index' %}" role="button">Запустить »</a></p>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <p>Copyright 2014 &copy; Peter A. Kurishev, All rights reserved. Made as a test task for SMYT.</p>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block extend_js %}
+    <script src="{% url 'js_reverse' %}" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}js/script.js"></script>
+{% endblock %}
+
+{% block contents %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    {% for m in models %}
+                        {% if forloop.first %}
+                        <li>Модели</li>
+                        {% endif %}
+                        <li><a href="#" model-name="{{ m.name }}" class="model-selector">{{ m.title }}</a></li>
+                    {% empty %}
+                        <li>Нет моделей!</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+                <h1>{% if models|length > 0 %}Пожалуйста выберите модель из списка слева.{% endif %}</h1>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
