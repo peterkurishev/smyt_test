@@ -10,14 +10,12 @@
     <title>SMYT test task</title>
 
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    {#    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/datepicker3.css" >#}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/index.css" >
-    {#    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style.css" >#}
+    {% block extend_css %}{% endblock %}
 
 
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script src="{{ STATIC_URL }}js/transparency.min.js"></script>
     {% block extend_js %}{% endblock %}
 </head>
 
@@ -39,7 +37,7 @@
 </nav>
 
 {% block contents %}
-{#    TODO: Put the contents of the page here!#}
+{#    Put the contents of the page here!#}
 {% endblock %}
 
 </body>

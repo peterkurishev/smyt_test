@@ -10,3 +10,9 @@ rooms:
   fields:
     - {id: department, title: Отдел, type: char}
     - {id: spots, title: Вместимость, type: int}
+
+robocops:
+  title: Робокопы
+  fields:
+    - {id: height, title: Рост, type: int}
+    - {id: wight, title: Вес, type: int}

@@ -2,7 +2,12 @@
 
 {% block extend_js %}
     <script src="{% url 'js_reverse' %}" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
     <script src="{{ STATIC_URL }}js/script.js"></script>
+{% endblock %}
+
+{% block extend_css%}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/datepicker3.css" >
 {% endblock %}
 
 {% block contents %}
@@ -23,6 +28,22 @@
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
                 <h1>{% if models|length > 0 %}Пожалуйста выберите модель из списка слева.{% endif %}</h1>
+                <div class="row">
+                    <div id="table-container">
+                        <table class="table table-bordered table-hover" id="result">
+                            <thead>
+                            </thead>
+                            <tbody id="ttable">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div id="form-wrapper">
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
