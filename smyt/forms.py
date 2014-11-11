@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-__author__ = 'peter'
+__author__ = 'Peter A. Kurishev'
 
 # Django receipts snippet
 from django import forms
 from django.db import models
+
 
 def create_dynamic_form(model):
     meta = type('Meta', (), {"model": model, })

@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+__author__ = 'Peter A. Kurishev'
+
 from yaml import load
 
 try:
