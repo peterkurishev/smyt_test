@@ -62,7 +62,7 @@ function process_edition(cell, oldValue) {
 
 function update_table() {
     $('td[editable="true"]').on('click', null, function () {
-        if(cell.find("input").length > 0) {
+        if($(this).children().length > 0) {
             return;
         }
         var cell = $(this);
