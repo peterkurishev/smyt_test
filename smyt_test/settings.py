@@ -61,8 +61,12 @@ WSGI_APPLICATION = 'smyt_test.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd2q3kj8vhgvm4d',
+        'USER': 'icsnosnbntpmxy',
+        'PASSWORD': '484mDecBMWkd3uvgR24vNFM_o7',
+        'HOST': 'ec2-54-83-205-46.compute-1.amazonaws.com',
+        'PORT': '5432', # Set to empty string for default.
     }
 }
 
