@@ -6,6 +6,10 @@ __author__ = 'Peter A. Kurishev'
 from django.test import TestCase
 from django.db import models
 
+import unittest
+from django.test import Client
+import json
+
 from smyt.models import SmytModelGenerator
 
 
@@ -56,3 +60,29 @@ users:
         self.assertTrue(test_model._meta.get_field('date_joined').verbose_name.title(),
                         'Дата поступления на работу'.decode('utf-8'))
 
+
+class SmytRequestTestCase(unittest.TestCase):
+    def setUp(self):
+        self.client = Client()
+        # self.client.get('/smyt/f/users')
+        # print self.client.cookies
+        #
+        # self.csrf_token = self.client.cookies['csrftoken'].value
+
+    def test_models_list(self):
+        response = self.client.get('/smyt/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_add_user(self):
+        post_data = {
+            'name': 'Test User',
+            'paycheck': 12345,
+            'date_joined': '01/01/2014',
+        }
+        response = self.client.post('/smyt/a/users', data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get('/smyt/m/users', HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        json_data = json.loads(response.content)
+        self.assertEqual(len(json_data['objects']), 1)
