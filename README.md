@@ -13,5 +13,6 @@
 * Какой-нибудь темплейтинг на стороне клиента.
 * Разбиение на страницы.
 * Функциональое тестирование на Lettuce, например.
+* Прелоадер при загрузке таблицы.
 
 [ ![Codeship Status for peterkurishev/smyt_test](https://codeship.com/projects/14868e90-4bcb-0132-ba3a-3e5cf71b5945/status)](https://codeship.com/projects/46833)
