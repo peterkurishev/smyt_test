@@ -12,6 +12,27 @@ import json
 
 from smyt.models import SmytModelGenerator
 
+#Test data definitions
+ADD_USER_URL = '/smyt/a/users'
+UPDATE_USER_URL = '/smyt/u/users'
+GET_USERS_URL = '/smyt/m/users'
+ADD_ROOM_URL = '/smyt/a/rooms'
+GET_ROOMS_URL = '/smyt/m/rooms'
+UPDATE_ROOM_URL = '/smyt/u/rooms'
+
+DATE_JOINED_1 = '01/01/2014'
+PAYCHECK_1 = 12345
+NAME_1 = 'Test User'
+
+DATE_JOINED_2 = '2000-01-01'
+PAYCHECK_2 = 200000
+NAME_2 = 'Changed Name'
+
+DEPT_1 = 'Departament 1'
+SPOTS_1 = 2
+
+DEPT_2 = 'Departament 2'
+SPOTS_2 = 3
 
 class SmytModelTestCase(TestCase):
     def prepare_model(self):
@@ -64,10 +85,6 @@ users:
 class SmytRequestTestCase(unittest.TestCase):
     def setUp(self):
         self.client = Client()
-        # self.client.get('/smyt/f/users')
-        # print self.client.cookies
-        #
-        # self.csrf_token = self.client.cookies['csrftoken'].value
 
     def test_models_list(self):
         response = self.client.get('/smyt/')
@@ -75,14 +92,106 @@ class SmytRequestTestCase(unittest.TestCase):
 
     def test_add_user(self):
         post_data = {
-            'name': 'Test User',
-            'paycheck': 12345,
-            'date_joined': '01/01/2014',
+            'name': NAME_1,
+            'paycheck': PAYCHECK_1,
+            'date_joined': DATE_JOINED_1,
         }
-        response = self.client.post('/smyt/a/users', data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.post(ADD_USER_URL, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
 
         self.assertEqual(response.status_code, 200)
 
-        response = self.client.get('/smyt/m/users', HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.get(GET_USERS_URL, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+
         json_data = json.loads(response.content)
         self.assertEqual(len(json_data['objects']), 1)
+
+    def test_update_user_name(self):
+        post_data = {
+            'pk': 1,
+            'field': 'name',
+            'value': NAME_2,
+            }
+        response = self.client.post(UPDATE_USER_URL, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(GET_USERS_URL, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        json_data = json.loads(response.content)
+        self.assertEqual(json_data['objects'][0]['id'], 1)
+        self.assertEqual(json_data['objects'][0]['name'], NAME_2)
+
+    def test_update_user_paycheck(self):
+        post_data = {
+            'pk': 1,
+            'field': 'paycheck',
+            'value': PAYCHECK_2,
+            }
+        response = self.client.post(UPDATE_USER_URL, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(GET_USERS_URL, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        json_data = json.loads(response.content)
+        self.assertEqual(json_data['objects'][0]['id'], 1)
+        self.assertEqual(json_data['objects'][0]['paycheck'], PAYCHECK_2)
+
+    def test_update_user_date_joined(self):
+        post_data = {
+            'pk': 1,
+            'field': 'date_joined',
+            'value': '2000-01-01',
+            }
+        response = self.client.post(UPDATE_USER_URL, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(GET_USERS_URL, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        json_data = json.loads(response.content)
+        self.assertEqual(json_data['objects'][0]['id'], 1)
+        self.assertEqual(json_data['objects'][0]['date_joined'], '2000-01-01')
+
+    def test_add_room(self):
+        post_data = {
+            'department': DEPT_1,
+            'spots': SPOTS_1,
+            }
+        response = self.client.post(ADD_ROOM_URL, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(GET_ROOMS_URL, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.status_code, 200)
+
+        json_data = json.loads(response.content)
+        self.assertEqual(len(json_data['objects']), 1)
+
+    def test_update_room_dept(self):
+        post_data = {
+            'pk': 1,
+            'field': 'department',
+            'value': DEPT_2,
+            }
+        response = self.client.post(UPDATE_ROOM_URL, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(GET_ROOMS_URL, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        json_data = json.loads(response.content)
+        self.assertEqual(json_data['objects'][0]['id'], 1)
+        self.assertEqual(json_data['objects'][0]['department'], DEPT_2)
+
+    def test_update_room_spots(self):
+        post_data = {
+            'pk': 1,
+            'field': 'spots',
+            'value': SPOTS_2,
+            }
+        response = self.client.post(UPDATE_ROOM_URL, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(GET_ROOMS_URL, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        json_data = json.loads(response.content)
+        self.assertEqual(json_data['objects'][0]['id'], 1)
+        self.assertEqual(json_data['objects'][0]['spots'], SPOTS_2)
